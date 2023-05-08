@@ -1,0 +1,1 @@
+INSERT INTO mytable (name, age) VALUES (%s, %s);

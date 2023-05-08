@@ -1,0 +1,51 @@
+# version: '3.8'
+
+# services:
+#   rest:
+#     build: .
+#     ports:
+#       - "5000:5000"
+#     environment:
+#       - FLASK_APP=app.py
+#       - FLASK_ENV=development
+#       - POSTGRES_HOST=sudoku_db_container
+#       - POSTGRES_PORT=5432
+#       - POSTGRES_USER=rest_db_user
+#       - POSTGRES_PASSWORD=hello
+#       - POSTGRES_DB=sudoku_thing_db
+#     command: flask run --host=0.0.0.0
+
+
+
+version: '3'
+
+services:
+  sudoku_db:
+    image: postgres
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: rest_db_user
+      POSTGRES_PASSWORD: hello
+      POSTGRES_DB: sudoku_thing_db
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+      - ./initdb:/docker-entrypoint-initdb.d
+      
+
+  rest:
+    build:       
+      context: ./rest
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    depends_on:
+      - sudoku_db
+    environment:
+      DB_HOST: sudoku_db
+      DB_PORT: 5432
+      DB_USER: rest_db_user
+      DB_PASSWORD: hello
+      DB_NAME: sudoku_thing_db
+
+

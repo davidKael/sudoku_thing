@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  db:
+    container_name: sudoku_db_container
+    image: postgres
+    environment:
+      POSTGRES_USER: rest_db_user
+      POSTGRES_PASSWORD: hello
+      POSTGRES_DB: sudoku_thing_db
+    volumes:
+      - db_data:/var/lib/postgresql/data/
+    ports:
+      - "5433:5432"
+
+volumes:
+  db_data:
