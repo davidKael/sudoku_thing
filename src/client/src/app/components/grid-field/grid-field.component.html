@@ -1,0 +1,26 @@
+<div class="play-panel">
+    <div class="grid" 
+        [style.grid-template-columns]="'repeat(' + columns + ', 1fr)'"
+        [style.grid-template-rows]="'repeat(' + rows + ', 1fr)'"
+    >
+        <div *ngFor="let square of squares;" class="grid-btn-holder">
+            <div 
+                id="{{'x'+square.column+',y'+square.row+',subbox'+square.subBox}}" 
+                (click)="selectNumber(square)"  
+                class="grid-btn"
+                [class.locked]="square.isLocked"
+                [class.even]="square.subBox%2==0"
+                [class.relative]="relatives.includes(square)"
+                [class.selected]="square==selectedSquare"
+                [class.same-value]="square.displayedValue==selectedSquare?.displayedValue"
+            >
+                {{square.displayedValue}}
+            </div>
+        </div>
+    </div>
+    <div class="answer-panel" [style.grid-template-columns]="'repeat(' + answerBtnValues.length + ', 1fr)'">
+        <div class="answer-btn-holder" *ngFor="let val of answerBtnValues">
+            <div class="answer-btn " (click)="setCurrentAnswer(val)">{{val}}</div>
+        </div>
+    </div>
+</div>

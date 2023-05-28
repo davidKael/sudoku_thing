@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RestService } from './services/rest.service';
+import { SudokuEngineService } from './services/sudokuEngine/sudoku-engine.service';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,7 @@ import { RestService } from './services/rest.service';
 export class AppComponent {
   title = 'client';
 
-  constructor(private restService:RestService){}
+  constructor(private restService:RestService, public sudokuEngineService:SudokuEngineService){}
 
   tryIt(){
     this.restService.getTestData().subscribe(res=>{
