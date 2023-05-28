@@ -18,9 +18,12 @@
             </div>
         </div>
     </div>
-    <div class="answer-panel" [style.grid-template-columns]="'repeat(' + answerBtnValues.length + ', 1fr)'">
-        <div class="answer-btn-holder" *ngFor="let val of answerBtnValues">
+    <div class="answer-panel" [style.grid-template-columns]="'repeat(' + answerValues.length + ', 1fr)'">
+        <div class="answer-btn-holder" *ngFor="let val of answerValues">
             <div class="answer-btn " (click)="setCurrentAnswer(val)">{{val}}</div>
         </div>
     </div>
+    
+    <button (click)="generateGrid()">TEST</button>
+    <button (click)="checkPossibles()">Check Possibles</button>
 </div>
