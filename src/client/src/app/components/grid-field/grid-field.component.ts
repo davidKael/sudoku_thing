@@ -1,6 +1,13 @@
+import { KeyValue } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Square } from 'src/app/models/square.model';
 
+interface GridTemplate{
+  
+  key:string,
+  value:string[]
+  
+}
 
 @Component({
   selector: 'app-grid-field',
@@ -10,14 +17,33 @@ import { Square } from 'src/app/models/square.model';
 export class GridFieldComponent implements OnInit {
 
   count = Array;
-  rows:number = 9;
-  columns:number = 9;
-  columnGroups:number = 3;
-  rowGroups:number = 3;
 
-  //answerValues:string[] = ["1","2","3","4","5","6","7","8","9","A","B","C","D","E","F","G"];
+
+  gridTemplates : GridTemplate[] = [
+    {
+      key:"1x1",
+      value:["1"]
+    },
+    {
+      key:"2x2",
+      value:["1","2","3","4"]
+    },
+    {
+      key:"3x3",
+      value:["1","2","3","4","5","6","7","8","9"]
+    },
+    {
+      key:"4x4",
+      value:["1","2","3","4","5","6","7","8","9","A","B","C","D","E","F","G"]
+    }
+  ]
+    
+
+  
+  selectedTemplate:string = "3x3";
+
   answerValues:string[] = ["1","2","3","4","5","6","7","8","9"];
-
+  edge = Math.sqrt(this.answerValues.length)
   selectedSquare:Square|null = null;
 
   squares : Square[] = [];
@@ -35,20 +61,27 @@ export class GridFieldComponent implements OnInit {
 
   ngOnInit(): void {
 
-    
+
   }
 
+
   setUpGrid(){
+
+    const startField = this.gridTemplates.find(x=> x.key==this.selectedTemplate)?.value;
+    if(startField) this.answerValues = startField;
     this.selectNumber();
+
     this.squares.length = 0;
 
-    for(let row = 0;  row < this.rows; row++){
-      for(let column = 0;  column < this.columns; column++){
+    for(let row = 0;  row < this.answerValues.length; row++){
+      for(let column = 0;  column < this.answerValues.length; column++){
 
-        let subrow = Math.floor(row / Math.floor(this.rows/this.rowGroups));
-        let subcol =  Math.floor(column/Math.floor(this.columns/this.columnGroups));
+        let subrow = Math.floor(row / Math.sqrt(this.answerValues.length));
+        let subcol =  Math.floor(column/ Math.sqrt(this.answerValues.length));
 
-        this.squares.push(new Square(column,row,((subrow)*(this.columnGroups)+subcol), this.answerValues.slice()))
+        
+
+        this.squares.push(new Square(column,row,((subrow)*(Math.sqrt(this.answerValues.length))+subcol), subrow, this.answerValues.slice()))
  
 
       }
@@ -123,6 +156,7 @@ export class GridFieldComponent implements OnInit {
 
   generateGrid(){
 
+    
 
     let finished = false;
     let tries = 0;
@@ -195,7 +229,5 @@ export class GridFieldComponent implements OnInit {
     }
     
 
-    console.log("Finished");
-    console.log("Tries: ", tries);
   }
 }

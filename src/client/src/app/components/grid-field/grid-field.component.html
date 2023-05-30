@@ -1,7 +1,7 @@
 <div class="play-panel">
     <div class="grid" 
-        [style.grid-template-columns]="'repeat(' + columns + ', 1fr)'"
-        [style.grid-template-rows]="'repeat(' + rows + ', 1fr)'"
+        [style.grid-template-columns]="'repeat(' + answerValues.length + ', 1fr)'"
+        [style.grid-template-rows]="'repeat(' + answerValues.length + ', 1fr)'"
     >
         <div *ngFor="let square of squares;" class="grid-btn-holder">
             <div 
@@ -9,7 +9,7 @@
                 (click)="selectNumber(square)"  
                 class="grid-btn"
                 [class.locked]="square.isLocked"
-                [class.even]="square.subBox%2==0"
+                [class.even]="answerValues.length%2==0?(square.subBoxRow%2==0?square.subBox%2==0:square.subBox%2!=0):square.subBox%2==0"
                 [class.relative]="relatives.includes(square)"
                 [class.selected]="square==selectedSquare"
                 [class.same-value]="square.displayedValue==selectedSquare?.displayedValue"
@@ -25,5 +25,13 @@
     </div>
     
     <button (click)="generateGrid()">TEST</button>
+
+    <select [(ngModel)]="selectedTemplate">
+        <option *ngFor="let template of gridTemplates" [value]="template.key">
+          {{ template.key }}
+        </option>
+    </select>
+      
+      
     <button (click)="checkPossibles()">Check Possibles</button>
 </div>
