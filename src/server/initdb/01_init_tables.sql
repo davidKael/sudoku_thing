@@ -1,6 +1,6 @@
-CREATE TABLE stuff (
+CREATE TABLE GameScoreBoard (
   id SERIAL PRIMARY KEY,
-  name text UNIQUE NOT NULL,
-  level int NOT NULL default 0,
-  is_alive boolean not null default true
+  game TEXT NOT NULL,
+  player_name TEXT NOT NULL,
+  finished_in_seconds INT NOT NULL
 );
