@@ -1,19 +1,12 @@
-<div class="play-panel">
-    <div class="grid" 
-        [style.grid-template-columns]="'repeat(' + answerValues.length + ', 1fr)'"
-        [style.grid-template-rows]="'repeat(' + answerValues.length + ', 1fr)'"
-    >
+<div class="play-panel" *ngIf="formSubmitted">
+    <div class="grid" [style.grid-template-columns]="'repeat(' + answerValues.length + ', 1fr)'"
+        [style.grid-template-rows]="'repeat(' + answerValues.length + ', 1fr)'">
         <div *ngFor="let square of squares;" class="grid-btn-holder">
-            <div 
-                id="{{'x'+square.column+',y'+square.row+',subbox'+square.subBox}}" 
-                (click)="selectNumber(square)"  
-                class="grid-btn"
-                [class.locked]="square.isLocked"
+            <div id="{{'x'+square.column+',y'+square.row+',subbox'+square.subBox}}" (click)="selectNumber(square)"
+                class="grid-btn" [class.locked]="square.isLocked"
                 [class.even]="answerValues.length%2==0?(square.subBoxRow%2==0?square.subBox%2==0:square.subBox%2!=0):square.subBox%2==0"
-                [class.relative]="relatives.includes(square)"
-                [class.selected]="square==selectedSquare"
-                [class.same-value]="square.displayedValue==selectedSquare?.displayedValue"
-            >
+                [class.relative]="relatives.includes(square)" [class.selected]="square==selectedSquare"
+                [class.same-value]="square.displayedValue==selectedSquare?.displayedValue">
                 {{square.displayedValue}}
             </div>
         </div>
@@ -23,15 +16,17 @@
             <div class="answer-btn " (click)="setCurrentAnswer(val)">{{val}}</div>
         </div>
     </div>
-    
+
     <button (click)="generateGrid()">TEST</button>
 
     <select [(ngModel)]="selectedTemplate">
         <option *ngFor="let template of gridTemplates" [value]="template.key">
-          {{ template.key }}
+            {{ template.key }}
         </option>
     </select>
-      
-      
+
+
     <button (click)="checkPossibles()">Check Possibles</button>
 </div>
+
+<app-player-name *ngIf="!formSubmitted"></app-player-name>
