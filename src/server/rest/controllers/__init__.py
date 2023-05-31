@@ -1,12 +1,9 @@
 from flask_restx import Api
-from .testcontroller import api as TestControllerApi
-from .testothercontroller import api as TestOtherApi
-
+from .gameScoreBoardController import api as gamescoreController
 
 
 api = Api(
-    title="TestRest"  
+    title="Sudoku"  
 )
 
-api.add_namespace(TestControllerApi)
-api.add_namespace(TestOtherApi)
+api.add_namespace(gamescoreController)
