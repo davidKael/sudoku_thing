@@ -47,7 +47,7 @@ export class GridFieldComponent implements OnInit {
   selectedSquare:Square|null = null;
 
   squares : Square[] = [];
-
+  startLocked : number  = 17;
   relatives : Square[] = [];
 
   @ViewChild('grid') grid:any;
@@ -89,6 +89,10 @@ export class GridFieldComponent implements OnInit {
     }
   }
 
+
+
+
+
     
   setCurrentAnswer(value:string){ 
     if(!this.selectedSquare) return;
@@ -103,10 +107,10 @@ export class GridFieldComponent implements OnInit {
     
     square.trueValue = value;
     square.possibles.length = 0;
-
+    square.currValue  = value;
     if(!square) return;
     if(display){
-      square.currValue  = value;
+      
       square.displayedValue = value;
     }
 
@@ -213,8 +217,8 @@ export class GridFieldComponent implements OnInit {
        
   
   
-  
-        this.setTrueAnswer(newValue, nextToShave, true);
+        
+        this.setTrueAnswer(newValue, nextToShave);
 
         const index = unsetSquares.indexOf(nextToShave);
         if (index !== -1) {
@@ -226,8 +230,30 @@ export class GridFieldComponent implements OnInit {
       }
       tries++;
       
-    }
-    
+      let randomized :number[] = [];
 
+      for(let i = 0; i <= this.startLocked; i++){
+        let count=0;
+        while (count <100){
+          count++;
+          let randomIndex:number = Math.floor(Math.random() * this.squares.length);
+          if(!randomized.includes(randomIndex)){
+            randomized.push(randomIndex);
+            break;
+          }
+        }
+
+      }
+
+      randomized.forEach(r=>{
+        this.lockAnswer(this.squares[r]);
+      })
+
+    }
+
+    
+    
   }
+
+
 }

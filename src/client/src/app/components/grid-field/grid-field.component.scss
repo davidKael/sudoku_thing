@@ -47,6 +47,7 @@ $grid-height:$grid-width;
     &.locked{
         font-weight: bold;
         font-size: 2.1em;
+        color: rgb(149, 149, 149);
 
     }
     &:active{
@@ -84,7 +85,10 @@ $grid-height:$grid-width;
             }
         }
         &:not(.same-value){
-            color: white;
+            &:not(.locked){
+                color: white;
+            }
+            
         }
         &.same-value{
             color: rgb(1, 155, 216);
